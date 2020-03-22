@@ -1,0 +1,47 @@
+version: '3.3'
+
+services: 
+    traefik:
+        command: --docker.domain=${traefik_domain} --acme.email=${traefik_email} --logLevel=DEBUG
+        volumes:
+            - ./traefik/traefik.prod.toml:/traefik.toml
+        labels: 
+            - traefik.frontend.rule=Host:${traefik_url}
+            - traefik.frontend.auth.basic=${traefik_auth}
+            - traefik.frontend.redirect.entryPoint=https
+            - ghosts.host=${traefik_url}
+            - ghosts.proto=https
+            - ghosts.auth=true
+
+    ghosts:
+        command: -nohosts -proxymode -webnavbgcolor "#ffffff" -webnavtextcolor "#50596c"
+        labels: 
+            - traefik.frontend.rule=Host:${ghosts_url}
+            - traefik.frontend.redirect.entryPoint=https
+            - ghosts.host=${ghosts_url}
+
+    portainer:
+        command: -H unix:///var/run/docker.sock
+        labels: 
+            - traefik.frontend.rule=Host:${portainer_url}
+            - traefik.frontend.redirect.entryPoint=https
+            - ghosts.host=${portainer_url}
+            - ghosts.proto=https
+
+    adminer:
+        labels: 
+            - traefik.frontend.rule=Host:${adminer_url}
+            - traefik.frontend.auth.basic=${adminer_auth}
+            - traefik.frontend.redirect.entryPoint=https
+            - ghosts.host=${adminer_url}
+            - ghosts.proto=https
+            - ghosts.auth=true
+
+    mailhog:
+        labels: 
+            - traefik.frontend.rule=Host:${mailhog_url}
+            - traefik.frontend.auth.basic=${mailhog_auth}
+            - traefik.frontend.redirect.entryPoint=https
+            - ghosts.host=${mailhog_url}
+            - ghosts.proto=https
+            - ghosts.auth=true

@@ -27,10 +27,10 @@ services:
       - traefik.enable=true
       - traefik.port=8080
       - traefik.frontend.rule=Host:traefik.local
-      - traefik.docker.network=toolkit_proxy
+      - traefik.docker.network=dockertoolkit_proxy
       - ghosts.host=traefik.local
       - ghosts.category=~toolkit
-      - ghosts.logo=http://ghosts.local/static/logos/traefik.png
+      - ghosts.logo=static/logos/traefik.png
       - ghosts.description=Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.
     restart: unless-stopped
 
@@ -48,7 +48,7 @@ services:
       - traefik.enable=true
       - traefik.port=8080
       - traefik.frontend.rule=Host:ghosts.local
-      - traefik.docker.network=toolkit_proxy
+      - traefik.docker.network=dockertoolkit_proxy
       - ghosts.host=ghosts.local
       - ghosts.noweb=true
     depends_on:
@@ -67,10 +67,10 @@ services:
       - traefik.enable=true
       - traefik.port=9000
       - traefik.frontend.rule=Host:portainer.local
-      - traefik.docker.network=toolkit_proxy
+      - traefik.docker.network=dockertoolkit_proxy
       - ghosts.host=portainer.local
       - ghosts.category=~toolkit
-      - ghosts.logo=http://ghosts.local/static/logos/portainer.png
+      - ghosts.logo=static/logos/portainer.png
       - ghosts.description=Portainer is an open-source lightweight management UI which allows you to easily manage your docker hosts or swarm clusters.
     restart: unless-stopped
 
@@ -86,10 +86,10 @@ services:
       - traefik.enable=true
       - traefik.port=8080
       - traefik.frontend.rule=Host:adminer.local
-      - traefik.docker.network=toolkit_proxy
+      - traefik.docker.network=dockertoolkit_proxy
       - ghosts.host=adminer.local
       - ghosts.category=~toolkit
-      - ghosts.logo=http://ghosts.local/static/logos/adminer.png
+      - ghosts.logo=static/logos/adminer.png
       - ghosts.description=Database management in a single PHP file.
     restart: unless-stopped
 
@@ -103,9 +103,9 @@ services:
       - traefik.enable=true
       - traefik.port=8025
       - traefik.frontend.rule=Host:mailhog.local
-      - traefik.docker.network=toolkit_proxy
+      - traefik.docker.network=dockertoolkit_proxy
       - ghosts.host=mailhog.local
       - ghosts.category=~toolkit
-      - ghosts.logo=http://ghosts.local/static/logos/mailhog.png
+      - ghosts.logo=static/logos/mailhog.png
       - ghosts.description=MailHog is an email testing tool for developers.
     restart: unless-stopped
