@@ -1,0 +1,111 @@
+version: '3.3'
+
+networks:
+  # All HTTP traefik between Traefik and backend containers
+  proxy: {}
+  # For db containers that want to be accessed through Adminer
+  db: {}
+  # For containers that send mails to Mailhog
+  mail: {}
+
+services:
+
+  traefik:
+    image: traefik:maroilles-alpine
+    command: --docker.domain=local --logLevel=DEBUG
+    container_name: traefik
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/traefik.toml:/traefik.toml
+      - ./certs:/certs
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.port=8080
+      - traefik.frontend.rule=Host:traefik.local
+      - traefik.docker.network=toolkit_proxy
+      - ghosts.host=traefik.local
+      - ghosts.category=~toolkit
+      - ghosts.logo=http://ghosts.local/static/logos/traefik.png
+      - ghosts.description=Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.
+    restart: unless-stopped
+
+  ghosts:
+    image: lobre/ghosts
+    container_name: ghosts
+    command: -proxymode -proxycontainername=traefik
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/hosts:/app/hosts
+      - ./logos/:/app/static/logos/
+    labels:
+      - traefik.enable=true
+      - traefik.port=8080
+      - traefik.frontend.rule=Host:ghosts.local
+      - traefik.docker.network=toolkit_proxy
+      - ghosts.host=ghosts.local
+      - ghosts.noweb=true
+    depends_on:
+      - traefik
+    restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    command: --no-auth -H unix:///var/run/docker.sock
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - traefik.enable=true
+      - traefik.port=9000
+      - traefik.frontend.rule=Host:portainer.local
+      - traefik.docker.network=toolkit_proxy
+      - ghosts.host=portainer.local
+      - ghosts.category=~toolkit
+      - ghosts.logo=http://ghosts.local/static/logos/portainer.png
+      - ghosts.description=Portainer is an open-source lightweight management UI which allows you to easily manage your docker hosts or swarm clusters.
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:standalone
+    container_name: adminer
+    networks:
+      - proxy
+      - db
+    volumes:
+      - ./adminer/plugins-enabled/:/var/www/html/plugins-enabled/:ro
+    labels:
+      - traefik.enable=true
+      - traefik.port=8080
+      - traefik.frontend.rule=Host:adminer.local
+      - traefik.docker.network=toolkit_proxy
+      - ghosts.host=adminer.local
+      - ghosts.category=~toolkit
+      - ghosts.logo=http://ghosts.local/static/logos/adminer.png
+      - ghosts.description=Database management in a single PHP file.
+    restart: unless-stopped
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    networks:
+      - proxy
+      - mail
+    labels:
+      - traefik.enable=true
+      - traefik.port=8025
+      - traefik.frontend.rule=Host:mailhog.local
+      - traefik.docker.network=toolkit_proxy
+      - ghosts.host=mailhog.local
+      - ghosts.category=~toolkit
+      - ghosts.logo=http://ghosts.local/static/logos/mailhog.png
+      - ghosts.description=MailHog is an email testing tool for developers.
+    restart: unless-stopped
