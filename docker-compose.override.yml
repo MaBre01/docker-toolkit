@@ -1,0 +1,11 @@
+# Override file used for configuration wanted on dev but not on prod
+version: '3.3'
+
+services: 
+    traefik:
+        volumes: 
+            - ./certs:/certs
+
+    ghosts:
+        volumes: 
+            - /etc/hosts:/app/hosts
