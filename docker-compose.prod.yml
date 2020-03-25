@@ -17,6 +17,7 @@ services:
         command: -nohosts -proxymode -webnavbgcolor "#ffffff" -webnavtextcolor "#50596c"
         labels: 
             - traefik.frontend.rule=Host:${ghosts_url}
+            - traefik.frontend.auth.basic=${ghosts_auth}
             - traefik.frontend.redirect.entryPoint=https
             - ghosts.host=${ghosts_url}
 
