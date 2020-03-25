@@ -31,7 +31,7 @@ services:
             - ghosts.category=~toolkit
             - ghosts.logo=static/logos/traefik.png
             - ghosts.description=Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.
-      restart: unless-stopped
+        restart: unless-stopped
 
     ghosts:
         image: lobre/ghosts
