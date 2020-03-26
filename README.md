@@ -17,3 +17,7 @@ This project has to be started only once as it will automatically restart on the
     docker-compose up -d
 
 Once it has started, you can browse [ghosts.local](http://ghosts.local) to find links to exposed containers through the proxy.
+
+## Possibilities of errors
+
+It is possible that Docker create network with '-' in it name. You can add this caracter to fix this bug in the network name.
