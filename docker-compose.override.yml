@@ -1,11 +1,35 @@
-# Override file used for configuration wanted on dev but not on prod
-version: '3.3'
+version: '3.5'
 
 services: 
     traefik:
-        volumes: 
+        command: --docker.domain=local --logLevel=DEBUG
+        volumes:
+            - ./traefik/traefik.toml:/traefik.toml
             - ./certs:/certs
+        labels: 
+            - traefik.frontend.rule=Host:traefik.local
+            - ghosts.host=traefik.local
 
     ghosts:
+        command: -proxymode -proxycontainername=traefik
         volumes: 
             - /etc/hosts:/app/hosts
+        labels: 
+            - traefik.frontend.rule=Host:ghosts.local
+            - ghosts.host=ghosts.local
+
+    portainer:
+        command: --no-auth -H unix:///var/run/docker.sock
+        labels:
+            - traefik.frontend.rule=Host:portainer.local
+            - ghosts.host=portainer.local
+
+    adminer:
+        labels: 
+            - traefik.frontend.rule=Host:adminer.local
+            - ghosts.host=adminer.local
+
+    mailhog:
+        labels: 
+            - traefik.frontend.rule=Host:mailhog.local
+            - ghosts.host=mailhog.local

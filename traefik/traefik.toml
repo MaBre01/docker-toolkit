@@ -11,10 +11,10 @@ address = ":8080"
         address = ":443"
         [entryPoints.https.tls]
         [[entryPoints.https.tls.certificates]]
-              certFile = "/certs/local.crt"
-              keyFile = "/certs/local.key"
+            certFile = "/certs/local.crt"
+            keyFile = "/certs/local.key"
 
 [docker]
-endpoint = "unix:///var/run/docker.sock"
+endPoint = "unix:///var/run/docker.sock"
 watch = true
 exposedbydefault = false
