@@ -26,4 +26,4 @@ Once it has started, you can browse [ghosts.local](https://ghosts.local) to find
 ### Production environment
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
-Once it has started, you can browse [ghosts_url](https://your_ghosts_url) to find links to exposed containers through the proxy.
+Once it has started, you can browse [your_ghosts_url] to find links to exposed containers through the proxy.
