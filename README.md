@@ -17,7 +17,7 @@ It contains the 5 following pieces of software.
 This project has to be started only once as it will automatically restart on the machine reboot.
 
 ### Development environment
-First gen certificate with the script(certs/gen-cer.sh).
+First generate certificate with the script (certs/gen-cer.sh).
 
 Then docker-compose up -d
 
