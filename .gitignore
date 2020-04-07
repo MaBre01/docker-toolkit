@@ -1,2 +1,3 @@
 /certs/local.csr
 /certs/local.key
+/certs/local.crt
