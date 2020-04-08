@@ -1,13 +1,17 @@
 version: '3.5'
 
+volumes:
+    acme: {}
+
 services:
     traefik:
         command: --docker.domain=${traefik_domain} --acme.email=${traefik_email} --logLevel=DEBUG
         volumes: 
             - ./traefik/traefik.prod.toml:/traefik.toml
+            - acme:/etc/traefik/acme
         labels:
             - traefik.frontend.rule=Host:${traefik_url}
-            - traefik.frontend.auth.basic=${traefik_auth}
+            - traefik.frontend.auth.basic.users=${traefik_auth}
             - ghosts.host=${traefik_url}
             - ghosts.auth=true
 
@@ -15,7 +19,7 @@ services:
         command: -nohosts -proxymode -webnavbgcolor "#ffffff" -webnavtextcolor "#50596c"
         labels: 
             - traefik.frontend.rule=Host:${ghosts_url}
-            - traefik.frontend.auth.basic=${ghosts_auth}
+            - traefik.frontend.auth.basic.users=${ghosts_auth}
             - ghosts.host=${ghosts_url}
 
     portainer:
@@ -27,13 +31,13 @@ services:
     adminer:
         labels: 
             - traefik.frontend.rule=Host:${adminer_url}
-            - traefik.frontend.auth.basic=${adminer_auth}
+            - traefik.frontend.auth.basic.users=${adminer_auth}
             - ghosts.host=${adminer_url}
             - ghosts.auth=true
 
     mailhog:
         labels: 
             - traefik.frontend.rule=Host:${mailhog_url}
-            - traefik.frontend.auth.basic=${mailhog_auth}
+            - traefik.frontend.auth.basic.users=${mailhog_auth}
             - ghosts.host=${mailhog_url}
             - ghosts.auth=true
