@@ -7,7 +7,7 @@ services:
     traefik:
         command: --docker.domain=${traefik_domain} --acme.email=${traefik_email} --logLevel=DEBUG
         volumes: 
-            - ./traefik/traefik.prod.toml:/traefik.toml
+            - ./docker/traefik/traefik.prod.toml:/traefik.toml
             - acme:/etc/traefik/acme
         labels:
             - traefik.frontend.rule=Host:${traefik_url}

@@ -4,7 +4,7 @@ services:
     traefik:
         command: --docker.domain=local --logLevel=DEBUG
         volumes:
-            - ./traefik/traefik.toml:/traefik.toml
+            - ./docker/traefik/traefik.toml:/traefik.toml
             - ./certs:/certs
         labels: 
             - traefik.frontend.rule=Host:traefik.local
