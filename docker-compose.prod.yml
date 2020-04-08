@@ -23,7 +23,7 @@ services:
             - ghosts.host=${ghosts_url}
 
     portainer:
-        command: -H unix:///var/run/docker.sock
+        command: -H unix:///var/run/docker.sock --admin-password ${portainer_hash_password}
         labels:
             - traefik.frontend.rule=Host:${portainer_url}
             - ghosts.host=${portainer_url}
