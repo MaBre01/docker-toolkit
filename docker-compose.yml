@@ -75,7 +75,7 @@ services:
             - server_proxy
             - server_db
         volumes: 
-            - ./docker/adminer/plugins-enabled/:/var/www/html/plugins-enabled/:ro
+            - ./.docker/adminer/plugins-enabled/:/var/www/html/plugins-enabled/:ro
         labels: 
             - traefik.enable=true
             - traefik.port=8080
