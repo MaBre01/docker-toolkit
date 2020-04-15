@@ -4,11 +4,11 @@ This toolkit is set of tools aiming to simplify the execution of local container
 
 It contains the 5 following pieces of software.
 
- - **[Traefik](https://ghosts.local)**: a reverse proxy listening on port 80 and 443 for routing requests to specific containers.
- - **Ghosts**: tool to automatically register local domain names into the native OS `hosts` file.
- - **Portainer**: a web UI for managing Docker stacks and Docker containers.
- - **Adminer**: tool to manage all databases connected in a same docker network.
- - **MailHog**: SMTP server to catch and browse all mails sent from the local application.
+ - **[Traefik](https://docs.traefik.io/)**: a reverse proxy listening on port 80 and 443 for routing requests to specific containers.
+ - **[Ghosts](https://github.com/lobre/ghosts)**: tool to automatically register local domain names into the native OS `hosts` file.
+ - **[Portainer](https://www.portainer.io/)**: a web UI for managing Docker stacks and Docker containers.
+ - **[Adminer](https://www.adminer.org/)**: tool to manage all databases connected in a same docker network.
+ - **[MailHog](https://github.com/mailhog/MailHog)**: SMTP server to catch and browse all mails sent from the local application.
 
 ## Set Up for Linux
 
