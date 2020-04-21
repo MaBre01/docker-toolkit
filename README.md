@@ -66,7 +66,7 @@ During the installation, you might be prompted to allow connections to go throug
 
 As for Linux, you also need to generate the SSL certificates. Launch this command in the toolkit folder: 
 
-    docker run -it --rm -v [absolute-path-of-toolkit]/certs:/certs pgarrett/openssl-alpine ash -c "cd certs; /bin/ash ./gen-cer.sh"
+    docker run -it --rm -v [absolute-path-of-toolkit]/certs:/certs pgarrett/openssl-alpine ash -c "cd certs; sed -i.bak 's/\r$//' gen-cer.sh; /bin/ash ./gen-cer.sh"
 
 After, you can up the toolkit with :
 
